@@ -1,0 +1,22 @@
+services:
+  - type: worker
+    name: highrise-room-bot
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py startbot "$ROOM_ID" "$HIGHRISE_API_TOKEN"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.3
+      - key: ROOM_ID
+        sync: false
+      - key: HIGHRISE_API_TOKEN
+        sync: false
+      - key: BOT_OWNER_ID
+        value: ""
+      - key: BOT_DATA_PATH
+        value: /var/data/bot_data.json
+    disk:
+      name: highrise-bot-data
+      mountPath: /var/data
+      sizeGB: 1
